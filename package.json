@@ -1,0 +1,23 @@
+{
+  "name": "employeetrackerjacker",
+  "version": "1.0.0",
+  "description": "SQL challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Z9tails/EmployeeTrackerJacker.git"
+  },
+  "author": "Mark",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Z9tails/EmployeeTrackerJacker/issues"
+  },
+  "homepage": "https://github.com/Z9tails/EmployeeTrackerJacker#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.3.3"
+  }
+}
