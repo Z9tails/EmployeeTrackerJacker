@@ -2,13 +2,16 @@ DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS employee;
 
+--// Access database by name
 use meatcogs; 
+-- // Department table creation
 CREATE TABLE department
 (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) UNIQUE NOT NULL
 );
 
+--// Create table of role
     CREATE TABLE role
     (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -25,6 +28,8 @@ CREATE TABLE department
   ON
         DELETE CASCADE
 );
+
+--// Create table of employees with foreign keys
 
         CREATE TABLE employee
         (
