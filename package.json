@@ -4,7 +4,8 @@
   "description": "SQL challenge",
   "main": "index.js",
   "scripts": {
-    "test": "start"
+    "test": "jest",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,9 @@
   },
   "homepage": "https://github.com/Z9tails/EmployeeTrackerJacker#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "inquirer": "^8.2.4",
+    "inquiry": "^0.0.3",
     "mysql2": "^2.3.3"
   }
 }

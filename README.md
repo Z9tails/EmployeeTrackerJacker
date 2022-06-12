@@ -48,10 +48,10 @@ An application to follow/track/organize a business by viewing departments, roles
 
 
 ## Installation
-Install node.js and mysql. 
+Install node.js, mysql, npm node mysql2, and enter your own password in the connection.js file.
 
 ## Usage
-
+A demonstration of power of SQL for joining/modifying a database. 
 
 ## Contribution
 None
