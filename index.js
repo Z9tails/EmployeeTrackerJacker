@@ -2,6 +2,7 @@ const meatcogs = require("./db/connection");
 const inquirer = require("inquirer");
 require("console.table");
 
+// Initial inquirer promt
 const init = async () => {
   const answers = await inquirer.prompt({
     type: "list",
@@ -17,6 +18,7 @@ const init = async () => {
     ],
   });
 
+// Switch case function when selecting answers. 
   switch (answers.init) {
     case "show all departments":
       return showDepartments();
@@ -37,6 +39,7 @@ const init = async () => {
   }
 };
 
+// Add employee function
 const addEmployee = async () => {
   const answers = await inquirer.prompt([
     { name: "firstName", message: "what is the employee's first name?" },
@@ -44,6 +47,7 @@ const addEmployee = async () => {
     { name: "role_id", message: "what is the employee's role ID?" },
   ]);
 
+  // Inserts new employee name, id, and role into database
   meatcogs.query(
     `INSERT INTO employee set ?,?,?`,
     [
@@ -58,7 +62,7 @@ const addEmployee = async () => {
   );
 };
 
-
+// Updates employee role in table
 const updateEmployee = () => {
   
   meatcogs.query(`select * from employee`,  (err, data) => {
@@ -99,7 +103,7 @@ const updateEmployee = () => {
       )
     })}
 
-
+// Shows department information
 const showDepartments = () => {
   const query = `SELECT * FROM department`;
   meatcogs.query(query, (err, data) => {
@@ -109,7 +113,7 @@ const showDepartments = () => {
   });
 };
 
-
+// Shows employees
 const showEmployees = () => {
   const query =
     "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;";
@@ -120,7 +124,7 @@ const showEmployees = () => {
   });
 };
 
-
+// Deletes employee from database
 const deleteEmployee = () => {
 
   meatcogs.query(`select * from employee`, (err, data) => {
@@ -153,6 +157,7 @@ const deleteEmployee = () => {
   });
 };
 
+// Shows different roles 
 const showRole = () => {
   const query = `SELECT * FROM role`;
   meatcogs.query(query, (err, data) => {

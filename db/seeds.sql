@@ -1,6 +1,5 @@
 use meatcogs;
 
---//Initial value set for seeding table
 INSERT INTO department
     (name)
 VALUES
