@@ -2,8 +2,6 @@ const meatcogs = require("./db/connection");
 const inquirer = require("inquirer");
 require("console.table");
 
-
---// Inquirer question structure function
 const init = async () => {
   const answers = await inquirer.prompt({
     type: "list",
@@ -19,8 +17,6 @@ const init = async () => {
     ],
   });
 
-
---// Switch case dependant on choice response. 
   switch (answers.init) {
     case "show all departments":
       return showDepartments();
@@ -41,7 +37,6 @@ const init = async () => {
   }
 };
 
---// Add Employee function
 const addEmployee = async () => {
   const answers = await inquirer.prompt([
     { name: "firstName", message: "what is the employee's first name?" },
@@ -64,10 +59,8 @@ const addEmployee = async () => {
 };
 
 
---// Update employee function
 const updateEmployee = () => {
-  // showEmployees();
-
+  
   meatcogs.query(`select * from employee`,  (err, data) => {
     if (err) console.log(err);
 
@@ -107,8 +100,6 @@ const updateEmployee = () => {
     })}
 
 
-
---// Show department function
 const showDepartments = () => {
   const query = `SELECT * FROM department`;
   meatcogs.query(query, (err, data) => {
@@ -118,7 +109,7 @@ const showDepartments = () => {
   });
 };
 
---// Show employee function
+
 const showEmployees = () => {
   const query =
     "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;";
@@ -130,7 +121,6 @@ const showEmployees = () => {
 };
 
 
---// Delete employee function
 const deleteEmployee = () => {
 
   meatcogs.query(`select * from employee`, (err, data) => {
@@ -163,7 +153,6 @@ const deleteEmployee = () => {
   });
 };
 
---// Show role function
 const showRole = () => {
   const query = `SELECT * FROM role`;
   meatcogs.query(query, (err, data) => {
