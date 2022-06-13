@@ -2,7 +2,7 @@ const meatcogs = require("./db/connection");
 const inquirer = require("inquirer");
 require("console.table");
 
-// Initial inquirer promt
+// Initial inquirer prompt
 const init = async () => {
   const answers = await inquirer.prompt({
     type: "list",
@@ -14,11 +14,12 @@ const init = async () => {
       "show all roles",
       "add employee",
       "update employee",
+      "update employee manager",
       "delete employee",
     ],
   });
 
-// Switch case function when selecting answers. 
+  // Switch case function when selecting answers.
   switch (answers.init) {
     case "show all departments":
       return showDepartments();
@@ -30,9 +31,10 @@ const init = async () => {
       return addEmployee();
     case "update employee":
       return updateEmployee();
-      case "delete employee":
-        return deleteEmployee();
-
+    case "update employee manager":
+      return updateEmployeeManager();
+    case "delete employee":
+      return deleteEmployee();
 
     default:
       return;
@@ -45,15 +47,17 @@ const addEmployee = async () => {
     { name: "firstName", message: "what is the employee's first name?" },
     { name: "lastName", message: "what is the employee's last name?" },
     { name: "role_id", message: "what is the employee's role ID?" },
+    { name: "manager_id", message: "what is the employee's manager's id?" },
   ]);
 
   // Inserts new employee name, id, and role into database
   meatcogs.query(
-    `INSERT INTO employee set ?,?,?`,
+    `INSERT INTO employee set ?,?,?,?`,
     [
       { first_name: answers.firstName },
       { last_name: answers.lastName },
       { role_id: answers.role_id },
+      { manager_id: answers.manager_id },
     ],
     (err, result) => {
       if (err) console.error(err);
@@ -64,44 +68,77 @@ const addEmployee = async () => {
 
 // Updates employee role in table
 const updateEmployee = () => {
-  
-  meatcogs.query(`select * from employee`,  (err, data) => {
+  meatcogs.query("select * from employee", (err, data) => {
     if (err) console.log(err);
 
     let employees = data.map((employee) => `${employee.last_name}`);
 
-    inquirer.prompt([
-      {
-        message: "please pick a employee",
-        type: "list",
-        choices: [...employees],
-        name: "last_name",
-      },
-      {
-        message: "please insert a new employee role id",
-        type: "input",
-        name: "role_id",
-      },
-      ]).then(
-
-      answers=>{
-
+    inquirer
+      .prompt([
+        {
+          message: "please pick a employee",
+          type: "list",
+          choices: [...employees],
+          name: "last_name",
+        },
+        {
+          message: "please insert a new employee role id",
+          type: "input",
+          name: "role_id",
+        },
+      
+      ])
+      .then((answers) => {
         console.log(answers);
         meatcogs.query(
           "UPDATE EMPLOYEE SET role_id=? WHERE last_name=?",
           [answers.role_id, answers.last_name],
           (err, data) => {
             if (err) throw err;
-    
+
             showEmployees();
           }
-        )
-      }
-      
-  
-  
-      )
-    })}
+        );
+      });
+  });
+};
+
+// Updates employee manager
+const updateEmployeeManager = () => {
+  meatcogs.query("select * from employee", (err, data) => {
+    if (err) console.log(err);
+
+    let employees = data.map((employee) => `${employee.last_name}`);
+
+    inquirer
+      .prompt([
+        {
+          message: "please pick a employee",
+          type: "list",
+          choices: [...employees],
+          name: "last_name",
+        },
+
+        {
+          message: "please update employee manager's id",
+          type: "input",
+          name: "manager_id",
+        },
+      ])
+      .then((answers) => {
+        console.log(answers);
+        meatcogs.query(
+          "UPDATE EMPLOYEE SET manager_id=? WHERE last_name=?",
+          [answers.manager_id, answers.last_name],
+          (err, data) => {
+            if (err) throw err;
+
+            showEmployees();
+          }
+        );
+      });
+  });
+};
 
 // Shows department information
 const showDepartments = () => {
@@ -126,7 +163,6 @@ const showEmployees = () => {
 
 // Deletes employee from database
 const deleteEmployee = () => {
-
   meatcogs.query(`select * from employee`, (err, data) => {
     if (err) console.log(err);
 
@@ -140,7 +176,6 @@ const deleteEmployee = () => {
           choices: [...employees],
           name: "last_name",
         },
-       
       ])
       .then((answers) => {
         console.log(answers);
@@ -157,7 +192,7 @@ const deleteEmployee = () => {
   });
 };
 
-// Shows different roles 
+// Shows different roles
 const showRole = () => {
   const query = `SELECT * FROM role`;
   meatcogs.query(query, (err, data) => {
