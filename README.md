@@ -45,7 +45,7 @@ An application to follow/track/organize a business by viewing departments, roles
  - THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
 ## Video
-https://user-images.githubusercontent.com/100103488/173258925-bd526ea3-7cd1-4843-ad73-e373ef9ae924.mp4
+https://user-images.githubusercontent.com/100103488/173261543-11ba1895-0ea8-488a-972a-ed856f74ee3a.mp4
 
 ## Installation
 Install node.js, mysql, npm node mysql2, and enter your own password in the connection.js file.
@@ -66,6 +66,6 @@ None
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Contact 
-
+:trophy:
 * Github: [GitHub Profile](https://github.com/z9tails)
 
