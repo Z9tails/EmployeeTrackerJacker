@@ -226,24 +226,24 @@ init();
 // creates new role
 const addRole = async () => {
   const answers = await inquirer.prompt([
-    { name: "newRole", message: "what is the employee's first name?" },
-    { name: "lastName", message: "what is the employee's last name?" },
-    { name: "role_id", message: "what is the employee's role ID?" },
-    { name: "manager_id", message: "what is the employee's manager's id?" },
+    { name: "title", message: "what is the name of the role" },
+    { name: "salary", message: "what is the roles salary" },
+    { name: "role_id", message: "what is the new role ID?" },
+    
   ]);
 
-  // Inserts new employee name, id, and role into database
+  // Inserts new title, salary, and department_id
   meatcogs.query(
-    `INSERT INTO role set ?,?,?,?`,
+    `INSERT INTO role set ?,?,?`,
     [
-      { first_name: answers.firstName },
-      { last_name: answers.lastName },
-      { role_id: answers.role_id },
-      { manager_id: answers.manager_id },
+      { title: answers.title },
+      { salary: answers.salary },
+      { department_id: answers.department_id },
+      
     ],
     (err, result) => {
       if (err) console.error(err);
-      showEmployees();
+      showRole();
     }
   );
 };
