@@ -208,27 +208,13 @@ const showRole = () => {
   });
 };
 
-  // Inserts new department into dataset 
-  meatcogs.query(
-    `INSERT INTO department set ?`,
-      [
-        { name: answers.name },
-      ],
-      
-    (err, result) => {
-      if (err) console.error(err);
-      showDepartment();
-    }
-  );
 
-init();
-
-// creates new role
+// Creates new role
 const addRole = async () => {
   const answers = await inquirer.prompt([
     { name: "title", message: "what is the name of the role" },
     { name: "salary", message: "what is the roles salary" },
-    { name: "role_id", message: "what is the new role ID?" },
+    { name: "department_id", message: "what is the new roles department ID?" },
     
   ]);
 
@@ -247,3 +233,24 @@ const addRole = async () => {
     }
   );
 };
+
+const addDepartment = async () => {
+  const answers = await inquirer.prompt([
+    { name: "name", message: "what is the name of the department" },
+  ]);
+
+  // Inserts new title, salary, and department_id
+  meatcogs.query(
+    `INSERT INTO department set ?`,
+    
+      { name: answers.name },
+     
+    (err, result) => {
+      if (err) console.error(err);
+      showDepartments();
+    }
+  );
+};
+
+
+init();
