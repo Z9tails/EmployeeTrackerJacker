@@ -16,6 +16,8 @@ const init = async () => {
       "update employee",
       "update employee manager",
       "delete employee",
+      "add department",
+      "add a role",
     ],
   });
 
@@ -35,6 +37,10 @@ const init = async () => {
       return updateEmployeeManager();
     case "delete employee":
       return deleteEmployee();
+      case "add department":
+        return addDepartment();
+        case "add a role":
+        return addRole();
 
     default:
       return;
@@ -202,4 +208,42 @@ const showRole = () => {
   });
 };
 
+  // Inserts new department into dataset 
+  meatcogs.query(
+    `INSERT INTO department set ?`,
+      [
+        { name: answers.name },
+      ],
+      
+    (err, result) => {
+      if (err) console.error(err);
+      showDepartment();
+    }
+  );
+
 init();
+
+// creates new role
+const addRole = async () => {
+  const answers = await inquirer.prompt([
+    { name: "newRole", message: "what is the employee's first name?" },
+    { name: "lastName", message: "what is the employee's last name?" },
+    { name: "role_id", message: "what is the employee's role ID?" },
+    { name: "manager_id", message: "what is the employee's manager's id?" },
+  ]);
+
+  // Inserts new employee name, id, and role into database
+  meatcogs.query(
+    `INSERT INTO role set ?,?,?,?`,
+    [
+      { first_name: answers.firstName },
+      { last_name: answers.lastName },
+      { role_id: answers.role_id },
+      { manager_id: answers.manager_id },
+    ],
+    (err, result) => {
+      if (err) console.error(err);
+      showEmployees();
+    }
+  );
+};
